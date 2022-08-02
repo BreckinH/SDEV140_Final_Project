@@ -1,1 +1,179 @@
+'''
+SDEV 140: Final Project Submission
+Author: Breckin Hammel
+Program: Pizza Ordering Program
+'''
 
+#Import Tkinter to utilize GUI's
+
+import tkinter
+from tkinter import *
+
+# Class that holds all of the methods used
+
+class orderingGUI:
+
+    def __init__(self):
+    
+        # Create the main window and tip window, and gives them both titles
+    
+        self.main_window = tkinter.Tk()
+        self.main_window.title("Pizza Ordering Program")
+        self.pay_and_tip_window = tkinter.Tk()
+        self.pay_and_tip_window.title("Pay and Tip")
+        
+        # Creating the frames that will be included in the main window
+        
+        self.frame_one = tkinter.Frame(self.main_window)
+        self.frame_two = tkinter.Frame(self.main_window)
+        self.frame_three = tkinter.Frame(self.main_window)
+        self.frame_four = tkinter.Frame(self.main_window)
+        self.frame_five = tkinter.Frame(self.main_window)
+        
+        # Creates the text label for the top frame to introduce the program and lists costs
+        
+        self.prompt_label = tkinter.Label(self.frame_one, text = "Welcome to the Pizza Ordering Program! \nSimply enter what toppings you would like down below, and click the 'Pay and Tip' button to continue. \n0 Toppings: $7.99 | 1 Topping: $9.99 \n 2 Toppings: $11.99 | 3 Toppings: $14.99")
+        
+        # Packs the top label
+        
+        self.prompt_label.pack(side = "left")
+        
+        # This program allows the user to order up to three toppings, so below includes three labels and three entries in order for the user to add what they would like onto their pizza
+        
+        self.first_prompt = tkinter.Label(self.frame_two, text = "Topping #1: ")
+        self.second_prompt = tkinter.Label(self.frame_three, text = "Topping #2: ")
+        self.third_prompt = tkinter.Label(self.frame_four, text = "Topping #3: ")
+        
+        self.first_topping = tkinter.Entry(self.frame_two, width = 25)
+        self.second_topping = tkinter.Entry(self.frame_three, width = 25)
+        self.third_topping = tkinter.Entry(self.frame_four, width = 25)
+        
+        # Packs all items in the second, third, and fourth frame that include the topping labels and topping entries
+        
+        self.first_prompt.pack(side = "left")
+        self.second_prompt.pack(side = "left")
+        self.third_prompt.pack(side = "left")
+        self.first_topping.pack(side = "left")
+        self.second_topping.pack(side = "left")
+        self.third_topping.pack(side = "left")
+        
+        # Creates the two buttons that will make the "Pay and Tip" window, or close the program
+        
+        self.pay_and_tip = tkinter.Button(self.frame_five, text = "Pay and Tip", command = self.payAndTip)
+        self.quit_button = tkinter.Button(self.frame_five, text = "Exit", command = self.closeWindow)
+        
+        # Packs the buttons in the bottom frame
+        
+        self.pay_and_tip.pack(side = "left")
+        self.quit_button.pack(side = "left")
+        
+        # Lastly, pack all of the frames of the main window
+        
+        self.frame_one.pack()
+        self.frame_two.pack()
+        self.frame_three.pack()
+        self.frame_four.pack()
+        self.frame_five.pack()
+        
+        # Enter the tkinter main loop
+        
+        tkinter.mainloop()
+        
+    # This method is used in the main window, and will close the program
+    
+    def closeWindow(self):
+    
+        self.main_window.destroy()
+    
+    # This method is used in the main window, and will populate the 'Pay and Tip' window with new information after the user has finished with the first page
+    
+    def payAndTip(self):
+        
+        # Creating the frames that make up the second window
+        
+        self.tip_frame_one = tkinter.Frame(self.pay_and_tip_window)
+        self.tip_frame_two = tkinter.Frame(self.pay_and_tip_window)
+        self.tip_frame_three = tkinter.Frame(self.pay_and_tip_window)
+        
+        # Creates the text label that prompts the user to select what tip they want
+        
+        self.tip_prompt = tkinter.Label(self.tip_frame_one, text = "Please select your choice of tip from the options below.")
+        
+        # Packs the tip label
+        
+        self.tip_prompt.pack(side = "left")
+        
+        # Creates the three buttons that hold the tip options
+        
+        self.no_tip = tkinter.Button(self.tip_frame_two, text = "No Tip", command = self.noTipCheckout)
+        self.ten_p_tip = tkinter.Button(self.tip_frame_two, text = "10% Tip", command = self.tenPCheckout)
+        self.fifteen_p_tip = tkinter.Button(self.tip_frame_two, text = "15% Tip", command = self.fifteenPCheckout)
+        
+        # Packs the buttons in the middle frame
+        
+        self.no_tip.pack(side = "left")
+        self.ten_p_tip.pack(side = "left")
+        self.fifteen_p_tip.pack(side = "left")
+        
+        # Packs the frames of the 'Pay and Tip' window
+        
+        self.tip_frame_one.pack()
+        self.tip_frame_two.pack()
+        self.tip_frame_three.pack()
+        
+    # These methods are used in the 'Pay and Tip' window, and handle the actions of the three buttons in accordance of the user's selection
+        
+    def noTipCheckout(self): # Button for no tip
+        
+        toppingOne = (self.first_topping.get()) # Holds the value of the first topping
+        toppingTwo = (self.second_topping.get()) # Holds the value of the second topping
+        toppingThree = (self.third_topping.get()) # Holds the value of the third topping
+           
+        if toppingOne == "" and toppingTwo == "" and toppingThree == "":
+            self.price_prompt = tkinter.Label(self.tip_frame_three, text = "Your pizza with no toppings and no tip costs $7.99. Thank you!") # No toppings, no tip
+        elif toppingOne != "" and toppingTwo == "" and toppingThree == "":
+            self.price_prompt = tkinter.Label(self.tip_frame_three, text = "Your pizza with one topping and no tip costs $9.99. Thank you!") # 1 topping, no tip
+        elif toppingOne != "" and toppingTwo != "" and toppingThree == "":
+            self.price_prompt = tkinter.Label(self.tip_frame_three, text = "Your pizza with two toppings and no tip costs $11.99. Thank you!") # 2 toppings, no tip
+        else:
+            self.price_prompt = tkinter.Label(self.tip_frame_three, text = "Your pizza with three toppings and no tip costs $14.99. Thank you!") # 3 toppings, no tip
+                
+        self.price_prompt.pack(side = "left") # Shows this label after a tip button has been pressed
+            
+    def tenPCheckout(self): # Button for 10% tip
+        
+        toppingOne = (self.first_topping.get()) # Holds the value of the first topping
+        toppingTwo = (self.second_topping.get()) # Holds the value of the second topping
+        toppingThree = (self.third_topping.get()) # Holds the value of the third topping
+           
+        if toppingOne == "" and toppingTwo == "" and toppingThree == "":
+            self.price_prompt = tkinter.Label(self.tip_frame_three, text = "Your pizza with no toppings and 10% tip costs $8.79. Thank you!") # No toppings, 10% tip
+        elif toppingOne != "" and toppingTwo == "" and toppingThree == "":
+            self.price_prompt = tkinter.Label(self.tip_frame_three, text = "Your pizza with one topping and 10% tip costs $10.99. Thank you!") # 1 topping, 10% tip
+        elif toppingOne != "" and toppingTwo != "" and toppingThree == "":
+            self.price_prompt = tkinter.Label(self.tip_frame_three, text = "Your pizza with two toppings and 10% tip costs $13.19. Thank you!") # 2 toppings, 10% tip
+        else:
+            self.price_prompt = tkinter.Label(self.tip_frame_three, text = "Your pizza with three toppings and 10% tip costs $16.49. Thank you!") # 3 toppings, 10% tip
+                
+        self.price_prompt.pack(side = "left") # Shows this label after a tip button has been pressed
+            
+    def fifteenPCheckout(self): #Button for 15% tip
+        
+        toppingOne = (self.first_topping.get()) # Holds the value of the first topping
+        toppingTwo = (self.second_topping.get()) # Holds the value of the second topping
+        toppingThree = (self.third_topping.get()) # Holds the value of the third topping
+            
+        if toppingOne == "" and toppingTwo == "" and toppingThree == "":
+            self.price_prompt = tkinter.Label(self.tip_frame_three, text = "Your pizza with no toppings and 15% tip costs $9.19. Thank you!") # No toppings, 15% tip
+        elif toppingOne != "" and toppingTwo == "" and toppingThree == "":
+            self.price_prompt = tkinter.Label(self.tip_frame_three, text = "Your pizza with one topping and 15% tip costs $11.49. Thank you!") # 1 topping, 15% tip
+        elif toppingOne != "" and toppingTwo != "" and toppingThree == "":
+            self.price_prompt = tkinter.Label(self.tip_frame_three, text = "Your pizza with two toppings and 15% tip costs $13.79. Thank you!") # 2 toppings, 15% tip
+        else:
+            self.price_prompt = tkinter.Label(self.tip_frame_three, text = "Your pizza with three toppings and 15% tip costs $17.24. Thank you!") # 3 toppings, 15% tip
+           
+        self.price_prompt.pack(side = "left") # Shows this label after a tip button has been pressed
+        
+# Runs the program
+
+startProgram = orderingGUI()
